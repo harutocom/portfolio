@@ -8,11 +8,13 @@ import { content, skills, worksData, timelineData, type Lang } from './content';
 export default function Home() {
   const [lang, setLang] = useState<Lang>('ja');
   const [expandedWork, setExpandedWork] = useState<number | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const t = content[lang];
 
   const toggleLang = () => setLang(l => l === 'ja' ? 'en' : 'ja');
   const toggleWork = (id: number) =>
     setExpandedWork(prev => prev === id ? null : id);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <main className={styles.main}>
@@ -28,11 +30,44 @@ export default function Home() {
             <a href="#timeline">{t.nav.timeline}</a>
             <a href="#contact">{t.nav.contact}</a>
           </div>
-          <button className={styles.langToggle} onClick={toggleLang} aria-label="Toggle language">
-            {lang === 'ja' ? 'EN' : 'JA'}
-          </button>
+          <div className={styles.navRight}>
+            <button className={styles.langToggle} onClick={toggleLang} aria-label="Toggle language">
+              {lang === 'ja' ? 'EN' : 'JA'}
+            </button>
+            <button
+              className={styles.hamburger}
+              onClick={() => setMenuOpen(o => !o)}
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+            >
+              <span className={`${styles.hLine} ${menuOpen ? styles.hLineTop : ''}`} />
+              <span className={`${styles.hLine} ${menuOpen ? styles.hLineMid : ''}`} />
+              <span className={`${styles.hLine} ${menuOpen ? styles.hLineBot : ''}`} />
+            </button>
+          </div>
         </div>
       </nav>
+
+      {/* ── Mobile menu ── */}
+      {menuOpen && (
+        <div className={styles.mobileMenu}>
+          <div className="container">
+            <div className={styles.mobileNavLinks}>
+              <a href="#about" className={styles.mobileNavLink} onClick={closeMenu}>{t.nav.about}</a>
+              <a href="#skills" className={styles.mobileNavLink} onClick={closeMenu}>{t.nav.skills}</a>
+              <a href="#works" className={styles.mobileNavLink} onClick={closeMenu}>{t.nav.works}</a>
+              <a href="#timeline" className={styles.mobileNavLink} onClick={closeMenu}>{t.nav.timeline}</a>
+              <a href="#contact" className={styles.mobileNavLink} onClick={closeMenu}>{t.nav.contact}</a>
+            </div>
+            <button
+              className={styles.mobileLangToggle}
+              onClick={() => { toggleLang(); closeMenu(); }}
+            >
+              {lang === 'ja' ? '→ Switch to English' : '→ 日本語に切り替え'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── Hero ── */}
       <section className={styles.hero} id="home">
