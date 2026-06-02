@@ -53,6 +53,12 @@
   color: var(--text-primary);
 }
 
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .langToggle {
   background: none;
   border: 1px solid var(--border-color);
@@ -70,6 +76,86 @@
 .langToggle:hover {
   border-color: var(--text-primary);
   color: var(--text-primary);
+}
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--text-primary);
+}
+
+.hLine {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: currentColor;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.hLineTop { transform: translateY(6.5px) rotate(45deg); }
+.hLineMid { opacity: 0; }
+.hLineBot { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile Menu ── */
+.mobileMenu {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+.mobileNavLinks {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileNavLink {
+  display: block;
+  padding: 1rem 0;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  transition: color 0.15s ease;
+}
+
+.mobileNavLink:hover {
+  color: var(--text-primary);
+}
+
+.mobileLangToggle {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-heading);
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.4rem 0.9rem;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.mobileLangToggle:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
 }
 
 /* ── Hero ── */
@@ -631,10 +717,12 @@
 }
 
 /* ── Responsive ── */
+
+/* Tablet (≤900px) */
 @media (max-width: 900px) {
   .aboutGrid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
   .aboutLeft {
@@ -654,9 +742,14 @@
   }
 }
 
+/* Mobile (≤768px) */
 @media (max-width: 768px) {
   .navLinks {
     display: none;
+  }
+
+  .hamburger {
+    display: flex;
   }
 
   .worksGrid {
@@ -667,9 +760,69 @@
     grid-template-columns: 1fr;
   }
 
+  .skillLegend {
+    gap: 1.25rem;
+  }
+
+  .timelineList::before {
+    left: calc(48px + 1rem + 4px);
+  }
+
+  .timelineItem {
+    gap: 1rem;
+  }
+
+  .timelineLeft {
+    flex: 0 0 48px;
+  }
+
   .footerContent {
     flex-direction: column;
     gap: 1.5rem;
     text-align: center;
+  }
+}
+
+/* Small mobile (≤480px) */
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroCtas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .aboutLeft {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mobileNavLink {
+    font-size: 1.2rem;
+  }
+
+  .cardFooter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timelineList::before {
+    left: calc(40px + 1rem + 4px);
+  }
+
+  .timelineLeft {
+    flex: 0 0 40px;
+  }
+
+  .timelineYear {
+    font-size: 0.7rem;
   }
 }
