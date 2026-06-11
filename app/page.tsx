@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './page.module.css';
 import { content, skills, worksData, timelineData, type Lang } from './content';
@@ -9,12 +9,40 @@ export default function Home() {
   const [lang, setLang] = useState<Lang>('ja');
   const [expandedWork, setExpandedWork] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const t = content[lang];
+
+  useEffect(() => {
+    setDarkMode(document.documentElement.getAttribute('data-theme') === 'dark');
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   const toggleLang = () => setLang(l => l === 'ja' ? 'en' : 'ja');
   const toggleWork = (id: number) =>
     setExpandedWork(prev => prev === id ? null : id);
   const closeMenu = () => setMenuOpen(false);
+  const toggleDark = () => {
+    const next = !darkMode;
+    setDarkMode(next);
+    const theme = next ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  };
 
   return (
     <main className={styles.main}>
@@ -31,6 +59,9 @@ export default function Home() {
             <a href="#contact">{t.nav.contact}</a>
           </div>
           <div className={styles.navRight}>
+            <button className={styles.darkToggle} onClick={toggleDark} aria-label="Toggle dark mode">
+              <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} aria-hidden="true" />
+            </button>
             <button className={styles.langToggle} onClick={toggleLang} aria-label="Toggle language">
               {lang === 'ja' ? 'EN' : 'JA'}
             </button>
@@ -88,7 +119,7 @@ export default function Home() {
       <section id="about" className={styles.aboutSection}>
         <div className="container">
           <h2 className="section-title">{t.about.title}</h2>
-          <div className={styles.aboutGrid}>
+          <div className={`reveal ${styles.aboutGrid}`}>
             <div className={styles.aboutLeft}>
               <div className={styles.avatar}>
                 <span className={styles.avatarInitials}>HT</span>
@@ -116,7 +147,7 @@ export default function Home() {
       <section id="skills" className={styles.skillsSection}>
         <div className="container">
           <h2 className="section-title">{t.skills.title}</h2>
-          <div className={styles.skillsGrid}>
+          <div className={`reveal ${styles.skillsGrid}`}>
             {(['frontend', 'backend', 'infra'] as const).map(cat => (
               <div key={cat} className={styles.skillCategory}>
                 <h3 className={styles.categoryTitle}>{t.skills[cat]}</h3>
@@ -163,7 +194,7 @@ export default function Home() {
       <section id="works" className={styles.worksSection}>
         <div className="container">
           <h2 className="section-title">{t.works.title}</h2>
-          <div className={styles.worksGrid}>
+          <div className={`reveal ${styles.worksGrid}`}>
             {worksData.map(work => (
               <article key={work.id} className={styles.projectCard}>
                 <div className={styles.cardImageWrapper}>
@@ -242,7 +273,7 @@ export default function Home() {
       <section id="timeline" className={styles.timelineSection}>
         <div className="container">
           <h2 className="section-title">{t.timeline.title}</h2>
-          <div className={styles.timelineList}>
+          <div className={`reveal ${styles.timelineList}`}>
             {timelineData.map((item, i) => (
               <div key={i} className={styles.timelineItem}>
                 <div className={styles.timelineLeft}>
@@ -265,7 +296,7 @@ export default function Home() {
       <section id="contact" className={styles.contactSection}>
         <div className="container">
           <h2 className="section-title">{t.contact.title}</h2>
-          <div className={styles.textContent}>
+          <div className={`reveal ${styles.textContent}`}>
             <p className={styles.leadText}>{t.contact.lead}</p>
             <p className={styles.contactBody}>{t.contact.body}</p>
             <div className={styles.contactLinks}>

@@ -21,19 +21,17 @@
   --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #1e2b32;
-    --text-primary: #FFFFFF;
-    --text-secondary: #D3D3D3;
-    --bg-accent: #263540;
-    --border-color: #36454F;
+:root[data-theme="dark"] {
+  --bg-color: #1e2b32;
+  --text-primary: #FFFFFF;
+  --text-secondary: #D3D3D3;
+  --bg-accent: #263540;
+  --border-color: #36454F;
 
-    --accent-color: #D3D3D3;
-    --accent-hover: #FFFFFF;
+  --accent-color: #D3D3D3;
+  --accent-hover: #FFFFFF;
 
-    --nav-bg: rgba(30, 43, 50, 0.88);
-  }
+  --nav-bg: rgba(30, 43, 50, 0.88);
 }
 
 /* Reset & Base */
@@ -110,6 +108,18 @@ section {
 
 .animate-fade-in-up {
   animation: fadeInUp 0.9s var(--transition-bezier) forwards;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--transition-bezier), transform 0.7s var(--transition-bezier);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Responsive */

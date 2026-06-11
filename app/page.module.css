@@ -78,6 +78,26 @@
   color: var(--text-primary);
 }
 
+.darkToggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.darkToggle:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
 /* ── Hamburger ── */
 .hamburger {
   display: none;
