@@ -1,7 +1,7 @@
 export type Lang = 'ja' | 'en';
 
 interface NavContent {
-  about: string; skills: string; works: string; timeline: string; contact: string;
+  about: string; skills: string; works: string; timeline: string; writing: string; contact: string;
 }
 interface HeroContent {
   greeting: string; name: string; tagline: string; cta_works: string; cta_contact: string;
@@ -17,6 +17,32 @@ interface SkillsContent {
 interface WorksContent {
   title: string; detail_btn: string; close_btn: string; github: string; demo: string;
   background_label: string; challenge_label: string; tech_label: string;
+  filter_all: string;
+}
+interface StatsContent {
+  projects: string;
+  internship: string;
+  commits: string;
+}
+interface ContactFormContent {
+  name_label: string;
+  email_label: string;
+  message_label: string;
+  send: string;
+  sent: string;
+}
+interface CertsContent {
+  title: string;
+  score_label: string;
+}
+interface WritingContent {
+  title: string;
+  scrap_label: string;
+  scrap_title: string;
+  scrap_desc: string;
+  view_profile: string;
+  planned_label: string;
+  planned_note: string;
 }
 interface SiteContent {
   nav: NavContent;
@@ -25,7 +51,10 @@ interface SiteContent {
   skills: SkillsContent;
   works: WorksContent;
   timeline: { title: string };
-  contact: { title: string; lead: string; body: string };
+  contact: { title: string; lead: string; body: string; form: ContactFormContent };
+  stats: StatsContent;
+  certs: CertsContent;
+  writing: WritingContent;
 }
 
 export const content: Record<Lang, SiteContent> = {
@@ -35,6 +64,7 @@ export const content: Record<Lang, SiteContent> = {
       skills: 'Skills',
       works: 'Works',
       timeline: 'Timeline',
+      writing: 'Writing',
       contact: 'Contact',
     },
     hero: {
@@ -71,12 +101,38 @@ export const content: Record<Lang, SiteContent> = {
       background_label: '背景・目的',
       challenge_label: '工夫した点',
       tech_label: '技術選定',
+      filter_all: 'すべて',
     },
     timeline: { title: 'Timeline' },
     contact: {
       title: 'Contact',
       lead: 'お気軽にご連絡ください。',
       body: '新しいプロジェクトのご相談や技術的なお話など、いつでも歓迎しています。',
+      form: {
+        name_label: 'お名前',
+        email_label: 'メールアドレス',
+        message_label: 'メッセージ',
+        send: '送信する',
+        sent: 'メールクライアントが開きます。内容を確認して送信してください。',
+      },
+    },
+    stats: {
+      projects: '制作作品',
+      internship: 'インターン（月）',
+      commits: 'コミット数',
+    },
+    certs: {
+      title: 'Certifications',
+      score_label: 'スコア',
+    },
+    writing: {
+      title: 'Writing',
+      scrap_label: 'スクラップ（学習ログ）',
+      scrap_title: '機械学習入門 勉強ログ',
+      scrap_desc: 'PyTorchやscikit-learnを中心に、機械学習の基礎を学んだ記録です。随時更新中。',
+      view_profile: 'Zennで見る',
+      planned_label: '執筆予定',
+      planned_note: 'スクラップをもとに、機械学習の入門記事を執筆予定です。',
     },
   },
   en: {
@@ -85,6 +141,7 @@ export const content: Record<Lang, SiteContent> = {
       skills: 'Skills',
       works: 'Works',
       timeline: 'Timeline',
+      writing: 'Writing',
       contact: 'Contact',
     },
     hero: {
@@ -121,12 +178,38 @@ export const content: Record<Lang, SiteContent> = {
       background_label: 'Background',
       challenge_label: 'Challenges',
       tech_label: 'Tech Decisions',
+      filter_all: 'All',
     },
     timeline: { title: 'Timeline' },
     contact: {
       title: 'Contact',
       lead: "Let's create something together.",
       body: 'Open to new projects, technical discussions, or just a friendly chat.',
+      form: {
+        name_label: 'Name',
+        email_label: 'Email',
+        message_label: 'Message',
+        send: 'Send Message',
+        sent: 'Your email client will open — review and send.',
+      },
+    },
+    stats: {
+      projects: 'Projects Built',
+      internship: 'Internship (mo.)',
+      commits: 'Commits',
+    },
+    certs: {
+      title: 'Certifications',
+      score_label: 'Score',
+    },
+    writing: {
+      title: 'Writing',
+      scrap_label: 'Scrap (Study Log)',
+      scrap_title: 'Machine Learning Study Log',
+      scrap_desc: 'Notes on ML fundamentals centered around PyTorch and scikit-learn. Ongoing.',
+      view_profile: 'View on Zenn',
+      planned_label: 'Coming Soon',
+      planned_note: 'Planning to turn these scraps into full articles on machine learning basics.',
     },
   },
 };
@@ -245,6 +328,38 @@ export const worksData: WorkItem[] = [
     },
   },
 ];
+
+export interface CertItem {
+  name: Record<Lang, string>;
+  issuer: string;
+  year: string;
+  score?: string;
+}
+
+// ※ TOEIC スコア・非IT系資格の名称・年は実際の値に更新してください
+export const certsData: CertItem[] = [
+  {
+    name: { ja: '基本情報技術者', en: 'Fundamental IT Engineer' },
+    issuer: 'IPA',
+    year: '2023',
+  },
+  {
+    name: { ja: 'ITパスポート', en: 'IT Passport' },
+    issuer: 'IPA',
+    year: '2022',
+  },
+  {
+    name: { ja: 'TOEIC L&R', en: 'TOEIC L&R' },
+    issuer: 'ETS',
+    year: '2023',
+    score: '---',   // ← 実際のスコアに変更してください
+  },
+  // 非IT系資格はここに追加してください
+  // { name: { ja: '資格名', en: 'Cert name' }, issuer: '発行機関', year: '20XX' },
+];
+
+export const ZENN_USERNAME = 'harutoooooooo';
+export const ZENN_SCRAP_URL = `https://zenn.dev/${ZENN_USERNAME}/scraps`;
 
 export interface TimelineItem {
   year: string;

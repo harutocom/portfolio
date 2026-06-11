@@ -15,8 +15,20 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "My Portfolio",
-  description: "Portfolio of an engineering student and developer.",
+  title: "Haruto Kobayashi | Portfolio",
+  description: "フロントからバックエンドまで触れるWeb系学生エンジニア、小林陽翔のポートフォリオ。",
+  openGraph: {
+    title: "Haruto Kobayashi | Portfolio",
+    description: "Full-stack web engineer — from UI to infrastructure.",
+    type: "website",
+    locale: "ja_JP",
+    alternateLocale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Haruto Kobayashi | Portfolio",
+    description: "Full-stack web engineer — from UI to infrastructure.",
+  },
 };
 
 export default function RootLayout({
