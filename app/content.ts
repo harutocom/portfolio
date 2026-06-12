@@ -37,6 +37,7 @@ interface CertsContent {
 }
 interface WritingContent {
   title: string;
+  article_label: string;
   scrap_label: string;
   scrap_title: string;
   scrap_desc: string;
@@ -44,7 +45,7 @@ interface WritingContent {
   planned_label: string;
   planned_note: string;
 }
-interface SiteContent {
+export interface SiteContent {
   nav: NavContent;
   hero: HeroContent;
   about: AboutContent;
@@ -127,6 +128,7 @@ export const content: Record<Lang, SiteContent> = {
     },
     writing: {
       title: 'Writing',
+      article_label: '記事',
       scrap_label: 'スクラップ（学習ログ）',
       scrap_title: '機械学習入門 勉強ログ',
       scrap_desc: 'PyTorchやscikit-learnを中心に、機械学習の基礎を学んだ記録です。随時更新中。',
@@ -204,6 +206,7 @@ export const content: Record<Lang, SiteContent> = {
     },
     writing: {
       title: 'Writing',
+      article_label: 'Article',
       scrap_label: 'Scrap (Study Log)',
       scrap_title: 'Machine Learning Study Log',
       scrap_desc: 'Notes on ML fundamentals centered around PyTorch and scikit-learn. Ongoing.',

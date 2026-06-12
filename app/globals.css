@@ -7,8 +7,8 @@
   --bg-accent: #F0F0F0;
   --border-color: #D3D3D3;
 
-  --accent-color: #36454F;
-  --accent-hover: #2a3740;
+  --accent-color: #2563eb;
+  --accent-hover: #1d4ed8;
 
   --nav-bg: rgba(255, 255, 255, 0.88);
 
@@ -28,8 +28,8 @@
   --bg-accent: #263540;
   --border-color: #36454F;
 
-  --accent-color: #D3D3D3;
-  --accent-hover: #FFFFFF;
+  --accent-color: #7aa5ff;
+  --accent-hover: #9cbcff;
 
   --nav-bg: rgba(30, 43, 50, 0.88);
 }
@@ -120,6 +120,27 @@ section {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Reduced motion: disable animations and show revealed content immediately */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Responsive */
