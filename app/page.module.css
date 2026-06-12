@@ -417,6 +417,22 @@
   border-color: var(--text-secondary);
 }
 
+.caseBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg-color);
+  background-color: var(--accent-color);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+}
+
 .cardImageWrapper {
   position: relative;
   width: 100%;
@@ -1021,6 +1037,17 @@
   font-weight: 500;
   color: var(--text-secondary);
   transition: all 0.2s ease;
+}
+
+.modalLinkBtnPrimary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--bg-color);
+}
+
+.modalLinkBtnPrimary:hover {
+  opacity: 0.85;
+  color: var(--bg-color);
 }
 
 .modalLinkBtn:hover {

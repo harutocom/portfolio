@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from '../page.module.css';
 import { type Lang, type SiteContent, type WorkItem } from '../content';
+import { langQuery } from '../lib/useLang';
 import { GitHubIcon } from './Icons';
 
 interface WorkModalProps {
@@ -98,6 +100,14 @@ export default function WorkModal({ work, t, lang, onClose }: WorkModalProps) {
             </div>
           </div>
           <div className={styles.modalLinks}>
+            {work.slug && (
+              <Link
+                href={`/works/${work.slug}${langQuery(lang)}`}
+                className={`${styles.modalLinkBtn} ${styles.modalLinkBtnPrimary}`}
+              >
+                {t.works.case_study_btn} →
+              </Link>
+            )}
             <a
               href={work.github}
               target="_blank"

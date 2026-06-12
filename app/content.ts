@@ -17,7 +17,19 @@ interface SkillsContent {
 interface WorksContent {
   title: string; detail_btn: string; close_btn: string; github: string; demo: string;
   background_label: string; challenge_label: string; tech_label: string;
-  filter_all: string;
+  filter_all: string; case_study_btn: string;
+}
+interface CaseStudyContent {
+  label: string;
+  back: string;
+  period: string;
+  team: string;
+  role: string;
+  problem_title: string;
+  features_title: string;
+  flow_title: string;
+  deepdive_title: string;
+  outcome_title: string;
 }
 interface StatsContent {
   projects: string;
@@ -56,6 +68,7 @@ export interface SiteContent {
   stats: StatsContent;
   certs: CertsContent;
   writing: WritingContent;
+  case_study: CaseStudyContent;
 }
 
 export const content: Record<Lang, SiteContent> = {
@@ -103,6 +116,19 @@ export const content: Record<Lang, SiteContent> = {
       challenge_label: '工夫した点',
       tech_label: '技術選定',
       filter_all: 'すべて',
+      case_study_btn: 'ケーススタディを読む',
+    },
+    case_study: {
+      label: 'Case Study',
+      back: 'トップへ戻る',
+      period: '期間',
+      team: '体制',
+      role: '担当',
+      problem_title: '課題',
+      features_title: '主な機能',
+      flow_title: '承認フロー',
+      deepdive_title: '技術的な深掘り',
+      outcome_title: '成果と学び',
     },
     timeline: { title: 'Timeline' },
     contact: {
@@ -181,6 +207,19 @@ export const content: Record<Lang, SiteContent> = {
       challenge_label: 'Challenges',
       tech_label: 'Tech Decisions',
       filter_all: 'All',
+      case_study_btn: 'Read Case Study',
+    },
+    case_study: {
+      label: 'Case Study',
+      back: 'Back to Top',
+      period: 'Period',
+      team: 'Team',
+      role: 'Role',
+      problem_title: 'The Problem',
+      features_title: 'Key Features',
+      flow_title: 'Approval Flow',
+      deepdive_title: 'Technical Deep Dive',
+      outcome_title: 'Outcome & Learnings',
     },
     timeline: { title: 'Timeline' },
     contact: {
@@ -246,6 +285,7 @@ export const skills: Record<'frontend' | 'backend' | 'infra', SkillItem[]> = {
 
 export interface WorkItem {
   id: number;
+  slug?: string; // set when the work has a dedicated case study page (/works/[slug])
   title: Record<Lang, string>;
   desc: Record<Lang, string>;
   tags: string[];
@@ -258,6 +298,31 @@ export interface WorkItem {
 }
 
 export const worksData: WorkItem[] = [
+  {
+    id: 4,
+    slug: 'city-hall-workflow',
+    title: { ja: '市役所 申請・承認ワークフローシステム', en: 'City Hall Approval Workflow System' },
+    desc: {
+      ja: '紙で運用されていた庁内の申請・承認業務をWeb化し、年間700時間以上の削減を目指す市役所DXプロジェクト。',
+      en: 'A city-hall DX project digitizing paper-based approval workflows, targeting 700+ hours saved annually.',
+    },
+    tags: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL'],
+    image: '/projects/project1.png',
+    github: 'https://github.com/harutocom/city-hall-workflow',
+    demo: null,
+    background: {
+      ja: '市役所の休暇申請などがすべて紙で運用され、3年前の申請書が未承認のまま埋もれるなど「申請しても処理されない」状態が常態化していました。',
+      en: 'Leave requests at the city hall were entirely paper-based — some had sat unapproved for three years. Submitting a request did not mean it would ever be processed.',
+    },
+    challenge: {
+      ja: '多段階承認ルート・コメント付き差し戻し・最終承認時の有給自動減算など、紙の運用ルールをWebのステートマシンとして再設計しました。',
+      en: 'Redesigned the paper-era rules as a web state machine: multi-step approval routes, remand with comments, and automatic paid-leave deduction on final approval.',
+    },
+    tech_reason: {
+      ja: 'MVPを最速で形にするため、Next.js(App Router)+ Neon + Prismaのサーバーレス構成を採用。認証はNextAuth.js、フォームはZod + React Hook Formで型安全に実装しています。',
+      en: 'Chose a serverless stack — Next.js (App Router), Neon, and Prisma — to ship an MVP fast. Auth via NextAuth.js; forms are type-safe with Zod + React Hook Form.',
+    },
+  },
   {
     id: 1,
     title: { ja: 'タスク管理システム', en: 'Task Manager' },

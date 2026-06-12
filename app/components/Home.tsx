@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect, useSyncExternalStore } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../page.module.css';
-import { content, type Lang, type WorkItem } from '../content';
+import { content, type WorkItem } from '../content';
 import { type ZennArticle } from '../lib/zenn';
+import { useLang } from '../lib/useLang';
+import { useTheme } from '../lib/useTheme';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import StatsRow from './StatsRow';
@@ -17,24 +19,6 @@ import Contact from './Contact';
 import Footer from './Footer';
 import WorkModal from './WorkModal';
 
-const subscribeTheme = (onChange: () => void) => {
-  const observer = new MutationObserver(onChange);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  return () => observer.disconnect();
-};
-
-// The ?lang= query param is the source of truth so the EN version is shareable by URL
-const subscribeLang = (onChange: () => void) => {
-  window.addEventListener('popstate', onChange);
-  window.addEventListener('langchange', onChange);
-  return () => {
-    window.removeEventListener('popstate', onChange);
-    window.removeEventListener('langchange', onChange);
-  };
-};
-const getLangSnapshot = (): Lang =>
-  new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'ja';
-
 export default function Home({ articles }: { articles: ZennArticle[] }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -42,20 +26,9 @@ export default function Home({ articles }: { articles: ZennArticle[] }) {
   const [showBackTop, setShowBackTop] = useState(false);
   const [modalWork, setModalWork] = useState<WorkItem | null>(null);
 
-  const lang = useSyncExternalStore(subscribeLang, getLangSnapshot, (): Lang => 'ja');
+  const { lang, toggleLang } = useLang();
+  const { darkMode, toggleDark } = useTheme();
   const t = content[lang];
-
-  // data-theme attribute (set before paint by the inline script) is the source of truth
-  const darkMode = useSyncExternalStore(
-    subscribeTheme,
-    () => document.documentElement.getAttribute('data-theme') === 'dark',
-    () => false
-  );
-
-  // Keep <html lang> in sync for assistive tech
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
 
   // Scroll reveal
   useEffect(() => {
@@ -107,19 +80,6 @@ export default function Home({ articles }: { articles: ZennArticle[] }) {
     document.body.style.overflow = modalWork ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [modalWork]);
-
-  const toggleLang = () => {
-    const url = new URL(window.location.href);
-    if (lang === 'ja') url.searchParams.set('lang', 'en');
-    else url.searchParams.delete('lang');
-    window.history.replaceState(null, '', url);
-    window.dispatchEvent(new Event('langchange'));
-  };
-  const toggleDark = () => {
-    const theme = darkMode ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  };
 
   return (
     <>

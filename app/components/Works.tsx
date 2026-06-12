@@ -45,6 +45,9 @@ export default function Works({ t, lang, onSelectWork }: WorksProps) {
                   fill
                   className={styles.cardImage}
                 />
+                {work.slug && (
+                  <span className={styles.caseBadge}>Case Study</span>
+                )}
               </div>
               <div className={styles.cardBody}>
                 <h3 className={styles.cardTitle}>{work.title[lang]}</h3>
